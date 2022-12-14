@@ -1,0 +1,37 @@
+<%- include('header') -%>
+ 
+ 
+ <!-- <% // if(day==="Friday") { %>
+    <h1 style="color:purple">Today is <%=//day%></h1>
+    <%// } else { %>
+    <h1>Today is <%=//day%></h1>
+    <%// } %> -->
+
+    <div class="box" id="heading">
+        <h1>
+            <%=listTitle%>
+        </h1>
+    </div>
+
+    <div class="box">
+        <% newItems.forEach(function(item){ %>
+            <div class="item">
+                <form class="checkbox-form" action="/delete" method="post">
+                    <input class="checkbox-todo" type="checkbox" name="checkbox" value="<%= item._id %>">
+                    <input type="hidden" name="list_name" value="<%=listTitle%>">
+                </form>
+                <p>
+                    <%=item.item%>
+                </p>
+            </div>
+            <% }) %>
+                <form class="item" action="/" method="post">
+                    <input type="text" name="todo_item" id="todo_input" placeholder="New item" autocomplete="off">
+                    <button type="submit" name="button" value="<%=listTitle%>">+</button>
+                </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/scripts/list.js"></script>
+
+    <%- include('footer') -%>
