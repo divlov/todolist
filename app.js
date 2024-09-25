@@ -10,7 +10,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect('mongodb+srv://admin:' + process.env.pass + '@cluster0.xbkoj5y.mongodb.net/todoListDB', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://admin:'+process.env.pass+'@cluster0.xbkoj5y.mongodb.net/todoListDB', { useNewUrlParser: true });
 
 const itemsSchema = new mongoose.Schema({
     item: {
@@ -89,10 +89,6 @@ app.post("/", function (req, res) {
     // }
     // else {
 
-    if (item === null || item === undefined || item==="") {
-        return;
-    }
-
     if (listName === homeListName) {
         const dbItem = new Item({
             item: item
@@ -126,7 +122,7 @@ app.post("/", function (req, res) {
 app.get("/:listTitle", function (req, res) {
 
 
-    const listName = _.capitalize(req.params.listTitle);
+    const listName=_.capitalize(req.params.listTitle);
 
     List.findOne({ name: listName }, function (err, itemFound) {
         if (err)
@@ -218,13 +214,13 @@ app.post("/delete", function (req, res) {
         //     }
         // })
 
-        List.findOneAndUpdate({ name: listName }, { $pull: { list: { _id: checkboxedId } } }, function (err, updatedList) {
-            if (err)
+        List.findOneAndUpdate({name:listName},{$pull:{list:{_id:checkboxedId}}},function(err,updatedList){
+            if(err)
                 console.log(err);
-            else {
+            else{
                 res.redirect("/" + listName);
             }
         });
-
+        
     }
 });
